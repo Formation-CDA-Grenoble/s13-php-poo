@@ -6,17 +6,25 @@ class Article {
     private $content;
     private $cover;
     private $category;
+    private $createdAt;
 
     public function __construct(
         $title = '',
         $content = '',
         $cover = '',
-        $category = ''
+        $category = '',
+        $createdAt = null
     ) {
         $this->title = $title;
         $this->content = $content;
         $this->cover = $cover;
         $this->category = $category;
+
+        if (is_null($createdAt)) {
+            $this->createdAt = new DateTime();
+        } else {
+            $this->createdAt = $createdAt;
+        }
     }
 
     /**
@@ -107,6 +115,26 @@ class Article {
     public function setCategory($category)
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of createdAt
+     */ 
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set the value of createdAt
+     *
+     * @return  self
+     */ 
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

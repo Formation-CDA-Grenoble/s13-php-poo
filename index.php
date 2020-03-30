@@ -35,7 +35,7 @@ $myArticle
         <?= $myArticle->getContent() ?>
     </p>
     <div>
-        Published in <?= $myArticle->getCategory() ?>
+        Published in <?= $myArticle->getCategory() ?> on <?= $myArticle->getCreatedAt()->format('Y-m-d H:i:s') ?>
     </div>
 </body>
 </html>
