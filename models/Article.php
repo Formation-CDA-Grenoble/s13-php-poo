@@ -30,7 +30,7 @@ class Article {
     /**
      * Get the value of id
      */ 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -38,7 +38,7 @@ class Article {
     /**
      * Get the value of title
      */ 
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -48,7 +48,7 @@ class Article {
      *
      * @return  self
      */ 
-    public function setTitle($title)
+    public function setTitle(string $title): Article
     {
         $this->title = $title;
 
@@ -58,7 +58,7 @@ class Article {
     /**
      * Get the value of content
      */ 
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -68,7 +68,7 @@ class Article {
      *
      * @return  self
      */ 
-    public function setContent($content)
+    public function setContent(string $content): Article
     {
         $this->content = $content;
 
@@ -78,7 +78,7 @@ class Article {
     /**
      * Get the value of cover
      */ 
-    public function getCover()
+    public function getCover(): string
     {
         return $this->cover;
     }
@@ -88,7 +88,7 @@ class Article {
      *
      * @return  self
      */ 
-    public function setCover($cover)
+    public function setCover(string $cover): Article
     {
         if (!filter_var($cover, FILTER_VALIDATE_URL)) {
             throw new RuntimeException('Property Article#cover must be a valid url ("' . $cover . '" given).');
@@ -102,7 +102,7 @@ class Article {
     /**
      * Get the value of category
      */ 
-    public function getCategory()
+    public function getCategory(): string
     {
         return $this->category;
     }
@@ -112,7 +112,7 @@ class Article {
      *
      * @return  self
      */ 
-    public function setCategory($category)
+    public function setCategory(string $category): Article
     {
         $this->category = $category;
 
@@ -122,7 +122,7 @@ class Article {
     /**
      * Get the value of createdAt
      */ 
-    public function getCreatedAt()
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }
@@ -132,7 +132,7 @@ class Article {
      *
      * @return  self
      */ 
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(DateTime $createdAt): Article
     {
         $this->createdAt = $createdAt;
 
