@@ -10,13 +10,47 @@ class Article {
     private $category;
     private $createdAt;
 
+    static private function createArticleFromData($data) {
+        return new Article(
+            $data['id'],
+            $data['title'],
+            $data['content'],
+            $data['cover'],
+            null,
+            new DateTime($data['created_at'])
+        );
+    }
+
+    static public function findAll() {
+        $database = Database::getInstance();
+
+        $sql = '
+        SELECT * FROM `article`
+        ';
+
+        $statement = $database->query($sql);
+
+        $result = $statement->fetchAll();
+
+        $result = array_map(
+            'self::createArticleFromData',
+            $result
+        );
+
+        return $result;
+    }
+
+
     public function __construct(
+        ?int $id = null,
         string $title = '',
         string $content = '',
         string $cover = '',
         Category $category = null,
         DateTime $createdAt = null
     ) {
+        $this->id = $id;
+
         $this
             ->setTitle($title)
             ->setContent($content)

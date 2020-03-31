@@ -5,13 +5,25 @@ require_once 'services/Database.php';
 require_once 'models/Article.php';
 require_once 'models/Category.php';
 
-$sql = '
-SELECT * FROM `article`
-';
 
-$statement = Database::getInstance()->query($sql);
+$articles = Article::findAll();
 
-$result = $statement->fetchAll();
+var_dump($articles); die();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 var_dump($result); die();
 
