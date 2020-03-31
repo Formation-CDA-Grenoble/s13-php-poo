@@ -9,21 +9,23 @@ class Article {
     private $createdAt;
 
     public function __construct(
-        $title = '',
-        $content = '',
-        $cover = '',
-        $category = '',
-        $createdAt = null
+        string $title = '',
+        string $content = '',
+        string $cover = '',
+        string $category = '',
+        DateTime $createdAt = null
     ) {
-        $this->title = $title;
-        $this->content = $content;
-        $this->cover = $cover;
-        $this->category = $category;
+        $this
+            ->setTitle($title)
+            ->setContent($content)
+            ->setCover($cover)
+            ->setCategory($category)
+        ;
 
         if (is_null($createdAt)) {
-            $this->createdAt = new DateTime();
+            $this->setCreatedAt(new DateTime());
         } else {
-            $this->createdAt = $createdAt;
+            $this->setCreatedAt($createdAt);
         }
     }
 
