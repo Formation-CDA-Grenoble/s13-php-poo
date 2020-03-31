@@ -1,5 +1,7 @@
 <?php
 
+require_once 'Category.php';
+
 class Article {
     private $id;
     private $title;
@@ -12,7 +14,7 @@ class Article {
         string $title = '',
         string $content = '',
         string $cover = '',
-        string $category = '',
+        Category $category = null,
         DateTime $createdAt = null
     ) {
         $this
@@ -92,7 +94,7 @@ class Article {
      */ 
     public function setCover(string $cover): Article
     {
-        if (!filter_var($cover, FILTER_VALIDATE_URL)) {
+        if (!empty($cover) && !filter_var($cover, FILTER_VALIDATE_URL)) {
             throw new RuntimeException('Property Article#cover must be a valid url ("' . $cover . '" given).');
         }
 
@@ -104,7 +106,7 @@ class Article {
     /**
      * Get the value of category
      */ 
-    public function getCategory(): string
+    public function getCategory(): Category
     {
         return $this->category;
     }
@@ -114,7 +116,7 @@ class Article {
      *
      * @return  self
      */ 
-    public function setCategory(string $category): Article
+    public function setCategory(?Category $category): Article
     {
         $this->category = $category;
 
