@@ -24,25 +24,4 @@ $myArticle
     ->setCover('http://imgs.abduzeedo.com/files/francois/wallpapers/wpw408/abdz_infrared_arashiyama_mockup.jpg')
     ->setCategory($newsCategory);
 
-var_dump($myArticle); die();
 ?>
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1><?= $myArticle->getTitle() ?></h1>
-    <img src="<?= $myArticle->getCover() ?>" />
-    <p>
-        <?= $myArticle->getContent() ?>
-    </p>
-    <div>
-        Published in <?= $myArticle->getCategory() ?> on <?= $myArticle->getCreatedAt()->format('Y-m-d H:i:s') ?>
-    </div>
-</body>
-</html>
