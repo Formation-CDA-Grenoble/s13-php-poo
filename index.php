@@ -5,29 +5,6 @@ require_once 'services/Database.php';
 require_once 'models/Article.php';
 require_once 'models/Category.php';
 
-
-$articles = Article::findAll();
-
-var_dump($articles); die();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var_dump($result); die();
-
-
 $newsCategory = new Category(
     'News'
 );

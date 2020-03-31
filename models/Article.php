@@ -1,5 +1,7 @@
 <?php
 
+require_once '../services/Database.php';
+
 require_once 'Category.php';
 
 class Article {
@@ -16,7 +18,11 @@ class Article {
             $data['title'],
             $data['content'],
             $data['cover'],
-            null,
+            new Category(
+                $data['category_id'],
+                $data['category_name'],
+                $data['category_description']
+            ),
             new DateTime($data['created_at'])
         );
     }
@@ -25,7 +31,9 @@ class Article {
         $database = Database::getInstance();
 
         $sql = '
-        SELECT * FROM `article`
+        SELECT `article`.`id`, `article`.`title`, `article`.`content`, `article`.`cover`, `article`.`created_at`, `category`.`id` AS `category_id`, `category`.`name` AS `category_name`, `category`.`description` AS `category_description`
+        FROM `article`
+        JOIN `category` ON `category`.`id` = `article`.`category_id`
         ';
 
         $statement = $database->query($sql);
@@ -36,6 +44,27 @@ class Article {
             'self::createArticleFromData',
             $result
         );
+
+        return $result;
+    }
+
+    static public function findById($id) {
+        $database = Database::getInstance();
+
+        $sql = '
+        SELECT `article`.`id`, `article`.`title`, `article`.`content`, `article`.`cover`, `article`.`created_at`, `category`.`id` AS `category_id`, `category`.`name` AS `category_name`, `category`.`description` AS `category_description`
+        FROM `article`
+        JOIN `category` ON `category`.`id` = `article`.`category_id`
+        WHERE `article`.`id` = :id
+        ';
+
+        $statement = $database->prepare($sql);
+
+        $statement->execute([ 'id' => $id ]);
+
+        $result = $statement->fetchAll();
+
+        $result = self::createArticleFromData($result[0]);
 
         return $result;
     }

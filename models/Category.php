@@ -7,9 +7,12 @@ class Category {
     private $articles;
 
     public function __construct(
+        int $id = null,
         string $name = '',
         string $description = ''
     ) {
+        $this->id = $id;
+
         $this
             ->setName($name)
             ->setDescription($description)

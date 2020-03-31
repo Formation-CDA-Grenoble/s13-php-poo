@@ -1,10 +1,10 @@
 <?php
 
-require_once '../data.php';
+require_once '../models/Article.php';
 
 $articleId = $_GET['id'];
 
-$article = $articles[$articleId];
+$article = Article::findById($articleId);
 
 ?>
 
