@@ -1,9 +1,5 @@
 <?php
 
-require_once '../services/Database.php';
-
-require_once 'Category.php';
-
 class Article {
     private $id;
     private $title;

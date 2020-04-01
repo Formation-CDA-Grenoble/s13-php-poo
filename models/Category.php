@@ -1,7 +1,5 @@
 <?php
 
-require_once '../services/Database.php';
-
 class Category {
     private $id;
     private $name;
