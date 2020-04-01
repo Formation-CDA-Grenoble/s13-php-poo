@@ -26,6 +26,35 @@ class ArticleController {
         ]);
     }
 
+    public function create(): void {
+        $article = new Article(
+            null,
+            $_POST['title'],
+            $_POST['content'],
+            $_POST['cover'],
+            Category::findById($_POST['category'])
+        );
+        
+        $article->save();
+
+        $this->list();
+    }
+
+    public function update(int $id): void {
+        $article = Article::findById($id);
+
+        $article
+            ->setTitle($_POST['title'])
+            ->setContent($_POST['content'])
+            ->setCover($_POST['cover'])
+            ->setCategory(Category::findById($_POST['category']))
+        ;
+        
+        $article->save();
+
+        $this->list();
+    }
+
     public function render(string $templateName, array $params = []): void {
         foreach ($params as $propName => $value) {
             $$propName = $value;

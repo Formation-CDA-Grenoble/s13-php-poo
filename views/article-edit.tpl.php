@@ -1,7 +1,7 @@
 <?php $new = !isset($article); ?>
 
 <h1><?= $new ? 'Create new' : 'Update' ?> article</h1>
-<form method="post" action="../actions/article-<?= $new ? 'create' : 'update' ?>.php<?= $new ? '' : '?id=' . $articleId ?>">
+<form method="post" action="/articles/<?= $new ? 'create' : $article->getId() . '/update' ?>">
     <label for="title">Title</label>
     <input type="text" name="title" value="<?= $new ? '' : $article->getTitle() ?>" />
     <label for="content">Article content</label>

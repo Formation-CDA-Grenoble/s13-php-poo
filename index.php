@@ -21,9 +21,14 @@ if (preg_match('/^\/articles(.*)$/', $uri, $matches)) {
         $controller->show($id);
     } else if ($articleUri === '/new') {
         $controller->new();
-    } else if (preg_match('/^\/(\d+)\/edit/', $articleUri, $matches)) {
+    } else if (preg_match('/^\/(\d+)\/edit$/', $articleUri, $matches)) {
         $id = $matches[1];
         $controller->edit($id);
+    } else if ($articleUri === '/create') {
+        $controller->create();
+    } else if (preg_match('/^\/(\d+)\/update$/', $articleUri, $matches)) {
+        $id = $matches[1];
+        $controller->update($id);
     }
     
     die();
