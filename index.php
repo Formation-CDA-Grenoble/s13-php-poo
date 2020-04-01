@@ -9,10 +9,16 @@ require_once 'controllers/ArticleController.php';
 
 $uri = $_SERVER['REQUEST_URI'];
 
-if ($uri === '/articles') {
-    $controller = new ArticleController();
+if (preg_match('/\/articles\/(\d*)/', $uri, $matches)) {
+    $id = $matches[1];
 
-    $controller->list();
+    $controller = new ArticleController();
+    
+    if (empty($id)) {
+        $controller->list();    
+    } else {
+        $controller->show($id);
+    }
     die();
 }
 

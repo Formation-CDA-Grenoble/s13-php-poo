@@ -1,7 +1,9 @@
 <ul>
     <?php foreach($articles as $article): ?>
     <li>
-        <?= $article->getTitle() ?>
+        <a href="/articles/<?= $article->getId() ?>">
+            <?= $article->getTitle() ?>
+        </a>
         <form method="post" action="../views/article-edit.php?id=<?= $article->getId() ?>">
             <button type="submit">Modify</button>
         </form>
