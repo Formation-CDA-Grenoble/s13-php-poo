@@ -7,6 +7,13 @@ require_once 'models/Category.php';
 
 require_once 'controllers/ArticleController.php';
 
-$controller = new ArticleController();
+$uri = $_SERVER['REQUEST_URI'];
 
-$controller->list();
+if ($uri === '/articles') {
+    $controller = new ArticleController();
+
+    $controller->list();
+    die();
+}
+
+echo 'Page not found';
