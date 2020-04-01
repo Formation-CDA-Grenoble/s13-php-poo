@@ -1,5 +1,7 @@
 <?php
 
+require_once '../services/Database.php';
+
 class Category {
     private $id;
     private $name;
@@ -19,6 +21,52 @@ class Category {
         ;
 
         $this->articles = [];
+    }
+
+    static public function createCategoryFromData(array $data): Category {
+        return new Category(
+            $data['id'],
+            $data['name'],
+            $data['description']
+        );
+    }
+
+    static public function findAll(): array {
+        $database = Database::getInstance();
+
+        $sql = '
+        SELECT * FROM `category`
+        ';
+
+        $statement = $database->query($sql);
+
+        $result = $statement->fetchAll();
+
+        $result = array_map(
+            'self::createCategoryFromData',
+            $result
+        );
+
+        return $result;
+    }
+
+    static public function findById(int $id): Category {
+        $database = Database::getInstance();
+
+        $sql = '
+        SELECT * FROM `category`
+        WHERE `id` = :id
+        ';
+
+        $statement = $database->prepare($sql);
+
+        $statement->execute([ 'id' => $id ]);
+
+        $result = $statement->fetchAll();
+
+        $result = self::createCategoryFromData($result[0]);
+
+        return $result;
     }
 
     /**
