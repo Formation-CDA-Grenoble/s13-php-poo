@@ -12,7 +12,7 @@ class Article {
     private $category;
     private $createdAt;
 
-    static private function createArticleFromData($data) {
+    static private function createArticleFromData($data): Article {
         return new Article(
             $data['id'],
             $data['title'],
@@ -27,7 +27,7 @@ class Article {
         );
     }
 
-    static public function findAll() {
+    static public function findAll(): array {
         $database = Database::getInstance();
 
         $sql = '
@@ -48,7 +48,7 @@ class Article {
         return $result;
     }
 
-    static public function findById($id) {
+    static public function findById(int $id): Article {
         $database = Database::getInstance();
 
         $sql = '
@@ -67,6 +67,59 @@ class Article {
         $result = self::createArticleFromData($result[0]);
 
         return $result;
+    }
+
+    public function save(): Article {
+        if (is_null($this->id)) {
+            return $this->create();
+        }
+        return $this->update();
+    }
+
+    public function create(): Article {
+        $database = Database::getInstance();
+
+        $sql = '
+        INSERT INTO `article` (`title`, `content`, `cover`, `created_at`, `category_id`)
+        VALUES (:title, :content, :cover, :createdAt, :categoryId)
+        ';
+
+        $database->prepare($sql)->execute([
+            'title' => $this->title,
+            'content' => $this->content,
+            'cover' => $this->cover,
+            'createdAt' => $this->createdAt->format('Y-m-d H:i:s'),
+            'categoryId' => $this->category->getId()
+        ]);
+
+        return $this;
+    }
+
+    public function update(): Article {
+        $database = Database::getInstance();
+
+        $sql = '
+        UPDATE `article`
+        SET `title` = :title, `content` = :content, `cover` = :cover, `created_at` = :createdAt, `category_id` = :categoryId
+        WHERE `id` = :id
+        ';
+
+        $statement = $database->prepare($sql);
+
+        $result = $statement->execute([
+            'id' => $this->id,
+            'title' => $this->title,
+            'content' => $this->content,
+            'cover' => $this->cover,
+            'createdAt' => $this->createdAt->format('Y-m-d H:i:s'),
+            'categoryId' => $this->category->getId()
+        ]);
+
+        if ($result === false) {
+            throw new RuntimeException('SQL error while saving Article #' . $this->id);
+        }
+        
+        return $this;
     }
 
 
