@@ -29,6 +29,9 @@ if (preg_match('/^\/articles(.*)$/', $uri, $matches)) {
     } else if (preg_match('/^\/(\d+)\/update$/', $articleUri, $matches)) {
         $id = $matches[1];
         $controller->update($id);
+    } else if (preg_match('/^\/(\d+)\/delete$/', $articleUri, $matches)) {
+        $id = $matches[1];
+        $controller->delete($id);
     }
     
     die();

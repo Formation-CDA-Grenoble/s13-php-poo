@@ -55,6 +55,14 @@ class ArticleController {
         $this->list();
     }
 
+    public function delete(int $id): void {
+        $article = Article::findById($id);
+
+        $article->delete();
+
+        $this->list();
+    }
+
     public function render(string $templateName, array $params = []): void {
         foreach ($params as $propName => $value) {
             $$propName = $value;

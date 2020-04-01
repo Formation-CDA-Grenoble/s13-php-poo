@@ -10,7 +10,7 @@
         <form method="post" action="/articles/<?= $article->getId() ?>/edit">
             <button type="submit">Modify</button>
         </form>
-        <form method="post" action="/article/<?= $article->getId() ?>/delete">
+        <form method="post" action="/articles/<?= $article->getId() ?>/delete">
             <button type="submit">Delete</button>
         </form>
     </li>
