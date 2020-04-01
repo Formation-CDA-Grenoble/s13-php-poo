@@ -1,40 +1,29 @@
 <?php
 
 require_once 'services/Database.php';
+require_once 'services/Router.php';
 
 require_once 'models/Article.php';
 require_once 'models/Category.php';
 
+require_once 'controllers/AbstractController.php';
 require_once 'controllers/ArticleController.php';
 
 $uri = $_SERVER['REQUEST_URI'];
 
-if (preg_match('/^\/articles(.*)$/', $uri, $matches)) {
-    $articleUri = $matches[1];
+$router = new Router();
 
-    $controller = new ArticleController();
+$match = $router->match($uri);
 
-    if (empty($articleUri)) {
-        $controller->list();    
-    } else if (preg_match('/^\/(\d+)$/', $articleUri, $matches)) {
-        $id = $matches[1];
-        $controller->show($id);
-    } else if ($articleUri === '/new') {
-        $controller->new();
-    } else if (preg_match('/^\/(\d+)\/edit$/', $articleUri, $matches)) {
-        $id = $matches[1];
-        $controller->edit($id);
-    } else if ($articleUri === '/create') {
-        $controller->create();
-    } else if (preg_match('/^\/(\d+)\/update$/', $articleUri, $matches)) {
-        $id = $matches[1];
-        $controller->update($id);
-    } else if (preg_match('/^\/(\d+)\/delete$/', $articleUri, $matches)) {
-        $id = $matches[1];
-        $controller->delete($id);
-    }
-    
-    die();
+if (is_null($match)) {
+    echo 'Page not found';
+} else {
+    $controllerInfo = array_shift($match);
+
+    list($controllerName, $methodName) = explode('#', $controllerInfo);
+
+    $controller = new $controllerName;
+    $controller->$methodName(...$match);
 }
 
-echo 'Page not found';
+die();
