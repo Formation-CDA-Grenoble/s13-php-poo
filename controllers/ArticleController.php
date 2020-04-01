@@ -13,6 +13,19 @@ class ArticleController {
         ]);
     }
 
+    public function new(): void {
+        $this->render('article-edit', [
+            'categories' => Category::findAll()
+        ]);
+    }
+
+    public function edit(int $id): void {
+        $this->render('article-edit', [
+            'categories' => Category::findAll(),
+            'article' => Article::findById($id)
+        ]);
+    }
+
     public function render(string $templateName, array $params = []): void {
         foreach ($params as $propName => $value) {
             $$propName = $value;
