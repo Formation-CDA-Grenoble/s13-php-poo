@@ -34,6 +34,7 @@ class Article {
         SELECT `article`.`id`, `article`.`title`, `article`.`content`, `article`.`cover`, `article`.`created_at`, `category`.`id` AS `category_id`, `category`.`name` AS `category_name`, `category`.`description` AS `category_description`
         FROM `article`
         JOIN `category` ON `category`.`id` = `article`.`category_id`
+        ORDER BY `article`.`created_at` DESC
         ';
 
         $statement = $database->query($sql);
@@ -122,6 +123,18 @@ class Article {
         return $this;
     }
 
+    public function delete(): void {
+        $database = Database::getInstance();
+
+        $sql = '
+        DELETE FROM `article`
+        WHERE `id` = :id
+        ';
+
+        $statement = $database->prepare($sql);
+
+        $statement->execute([ 'id' => $this->id ]);
+    }
 
     public function __construct(
         ?int $id = null,
